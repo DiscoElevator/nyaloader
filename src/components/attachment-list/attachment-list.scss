@@ -1,5 +1,6 @@
 .attachment-list {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
     padding: 5px;
 }

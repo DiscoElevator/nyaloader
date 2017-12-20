@@ -1,1 +1,4 @@
-export {fetchUserData} from './api';
+export {
+    fetchUserData,
+    fetchImages
+} from './api';
