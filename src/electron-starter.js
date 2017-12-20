@@ -14,10 +14,11 @@ const url = require('url');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+global.sharedObject = {};
 
 function createMainWindow () {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({width: 800, height: 600, webPreferences: {webSecurity: false}}); // TODO enable security for prod
 
     // and load the index.html of the app.
 /*    mainWindow.loadURL(url.format({
@@ -30,7 +31,7 @@ function createMainWindow () {
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
 
-    // createAuthWindow();
+    createAuthWindow();
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
@@ -45,8 +46,11 @@ function createAuthWindow() {
     authenticateVK({
         appId: APP_ID,
         scope: SCOPE,
-        revoke: true
+        revoke: false
     }).then((res) => {
+        global.sharedObject = {
+            accessToken: res.accessToken
+        };
         console.log(res);
     }).catch((err) => {
         console.error(err);

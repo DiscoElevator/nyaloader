@@ -1,1 +1,1 @@
-export {Header} from './header';
+export {HeaderWithData as Header} from './header-with-data';
