@@ -5,7 +5,7 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
-const APP_ID = '2055374';
+const APP_ID = '6306577';
 const SCOPE = 'messages';
 
 const path = require('path');
