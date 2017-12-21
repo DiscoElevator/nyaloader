@@ -26,12 +26,13 @@ function createMainWindow () {
         protocol: 'file:',
         slashes: true
     }));*/
+    mainWindow.hide();
     mainWindow.loadURL('http://localhost:3000'); // TODO add production support
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
 
-    createAuthWindow();
+    createAuthWindow(mainWindow);
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
@@ -42,16 +43,20 @@ function createMainWindow () {
     });
 }
 
-function createAuthWindow() {
+function createAuthWindow(mainWindow) {
     authenticateVK({
         appId: APP_ID,
         scope: SCOPE,
         revoke: false
+    }, {
+        parent: mainWindow
     }).then((res) => {
         global.sharedObject = {
             accessToken: res.accessToken
         };
         console.log(res);
+        mainWindow.show();
+        mainWindow.loadURL('http://localhost:3000');
     }).catch((err) => {
         console.error(err);
     });

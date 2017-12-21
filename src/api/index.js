@@ -1,4 +1,4 @@
 export {
     fetchUserData,
-    fetchImages
+    fetchPhotos
 } from './api';

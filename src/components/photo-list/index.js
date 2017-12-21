@@ -1,0 +1,1 @@
+export {PhotoListWithData as PhotoList} from './photo-list-with-data';

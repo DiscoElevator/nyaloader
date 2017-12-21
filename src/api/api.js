@@ -33,7 +33,7 @@ const exec = (method, params) => {
 };
 
 export const fetchUserData = () => exec('account.getProfileInfo');
-export const fetchImages = (chatId, startFrom = 0, count = 10) =>
+export const fetchPhotos = (chatId, startFrom = 0, count = 10) =>
     exec('messages.getHistoryAttachments', {
         peer_id: chatId,
         media_type: 'photo',

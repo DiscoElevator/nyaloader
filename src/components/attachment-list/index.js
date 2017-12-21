@@ -1,1 +1,0 @@
-export {AttachmentListWithData as AttachmentList} from './attachments-list-with-data';

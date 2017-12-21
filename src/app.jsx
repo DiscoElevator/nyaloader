@@ -1,12 +1,10 @@
 import React from 'react';
 import {Header} from 'components/header';
-import {AttachmentList} from './components/attachment-list';
-
-import styles from './app.scss'; // eslint-disable-line no-unused-vars
+import {PhotoList} from './components/photo-list';
 
 export const App = () => (
     <div>
         <Header />
-        <AttachmentList />
+        <PhotoList />
     </div>
 );

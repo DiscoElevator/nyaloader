@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 // import {createStore} from 'redux';
 
 import {App} from './app';
+import './index.scss';
 
 ReactDOM.render(
     (<App />),
