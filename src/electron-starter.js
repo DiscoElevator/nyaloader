@@ -7,7 +7,7 @@ const SCOPE = 'messages';
 const path = require('path');
 const url = require('url');
 const configUtils = require('./utils/config');
-const CONFIG_EVENTS = require('./constants/events');
+const EVENTS = require('./constants/events');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -100,7 +100,7 @@ function init() {
 }
 
 function initEvents(config) {
-    ipcMain.on(CONFIG_EVENTS.GET, (event) => {
-        event.sender.send(CONFIG_EVENTS.UPDATE, config);
+    ipcMain.on(EVENTS.CONFIG_GET, (event) => {
+        event.sender.send(EVENTS.CONFIG_UPDATE, config);
     });
 }

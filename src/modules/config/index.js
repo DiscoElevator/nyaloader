@@ -1,0 +1,1 @@
+export {createConfigHOC} from './config-hoc';

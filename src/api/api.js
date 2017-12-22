@@ -3,11 +3,12 @@ const electron = window.require('electron');
 const API_VERSION = '5.69';
 const API_URL = (method) => `https://api.vk.com/method/${method}`;
 const TOKEN_PARAM = 'access_token';
+const VERSION_PARAM = 'v';
 
 const constructURL = (method, token, params) => {
     const url = new URL(API_URL(method));
     url.searchParams.append(TOKEN_PARAM, token);
-    url.searchParams.append('v', API_VERSION);
+    url.searchParams.append(VERSION_PARAM, API_VERSION);
     if (params) {
         Object.entries(params).forEach(([key, value]) => {
             if (value !== null && value !== undefined) {

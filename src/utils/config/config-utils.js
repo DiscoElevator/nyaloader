@@ -1,11 +1,13 @@
 const fs = require('fs');
-const promisify = require('util.promisify');
-const DEFAULT_CONFIG = require('./default-config');
+const promisify = require('util.promisify'); // TODO replace with native after Electon 1.8 release
+const DEFAULT_CONFIG = require('../../constants/default-config');
 
 const CONFIG_FILE = 'config.json';
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
+
+const mergeWithDefault = (config) => Object.assign({}, DEFAULT_CONFIG, config);
 
 const readConfig = async () => {
     try {
@@ -15,7 +17,7 @@ const readConfig = async () => {
         if (data) {
             config = JSON.parse(data);
         }
-        return config;
+        return mergeWithDefault(config);
     } catch (err) {
         if (err.code === 'ENOENT') {
             console.log('config file not found, using default');
@@ -26,7 +28,7 @@ const readConfig = async () => {
 };
 
 const writeConfig = async (config) => {
-    const configToWrite = Object.assign({}, DEFAULT_CONFIG, config);
+    const configToWrite = mergeWithDefault(config);
     return await writeFile(CONFIG_FILE, JSON.stringify(configToWrite));
 };
 

@@ -1,7 +1,7 @@
 const CONFIG_EVENTS = {
-    GET: 'config:get',
-    UPDATE: 'config:update',
-    SAVE: 'config:save'
+    CONFIG_GET: 'config:get',
+    CONFIG_UPDATE: 'config:update',
+    CONFIG_SAVE: 'config:save'
 };
 
 module.exports = Object.assign({}, CONFIG_EVENTS);
