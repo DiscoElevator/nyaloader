@@ -7,11 +7,20 @@ export class PhotoListWithData extends React.Component {
         photos: []
     };
 
-    componentDidMount() {
-        fetchPhotos('2000000002').then(res => { // TODO replace hardcode
+    componentDidMount = () => this.fetchData(this.props.startFrom);
+
+    componentWillReceiveProps = ({startFrom}) => {
+        if (startFrom !== this.props.startFrom) {
+            this.fetchData(startFrom);
+        }
+    };
+
+    fetchData(startFrom) {
+        this.props.onLoadStart();
+        fetchPhotos('2000000002', startFrom).then(res => { // TODO replace hardcode
             const photos = res.items.map(item => item.attachment.photo);
-            console.log(photos);
             this.setState(() => ({photos}));
+            this.props.onLoadEnd(res.next_from);
         });
     }
 

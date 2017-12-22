@@ -10,7 +10,9 @@ const constructURL = (method, token, params) => {
     url.searchParams.append('v', API_VERSION);
     if (params) {
         Object.entries(params).forEach(([key, value]) => {
-            url.searchParams.append(key, value);
+            if (value !== null && value !== undefined) {
+                url.searchParams.append(key, value);
+            }
         });
     }
     return url;
@@ -24,10 +26,6 @@ const exec = (method, params) => {
     const url = constructURL(method, token, params);
     return fetch(url)
         .then(res => res.json())
-        .then(res => {
-            console.log(res);
-            return res;
-        })
         .then(res => res.response)
         .catch(err => {console.error(err); return err;});
 };

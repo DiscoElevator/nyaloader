@@ -1,1 +1,1 @@
-export {PhotoListWithData as PhotoList} from './photo-list-with-data';
+export {PhotoListWithPagination as PhotoList} from './photo-list-with-pagination';

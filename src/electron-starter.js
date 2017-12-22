@@ -18,7 +18,14 @@ global.sharedObject = {};
 
 function createMainWindow () {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 800, height: 600, webPreferences: {webSecurity: false}}); // TODO enable security for prod
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        show: false,
+        webPreferences: {
+            webSecurity: false
+        }
+    }); // TODO enable security for prod
 
     // and load the index.html of the app.
 /*    mainWindow.loadURL(url.format({
@@ -26,7 +33,6 @@ function createMainWindow () {
         protocol: 'file:',
         slashes: true
     }));*/
-    mainWindow.hide();
     mainWindow.loadURL('http://localhost:3000'); // TODO add production support
 
     // Open the DevTools.

@@ -5,6 +5,6 @@ import styles from './photo-list.scss';
 
 export const PhotoList = plainBlock('photo-list', {styles})(({className, photos}) => (
     <div className={className}>
-        {photos && photos.map(item => <Photo photo={item} />)}
+        {photos && photos.map(item => <Photo key={item.id} photo={item} />)}
     </div>
 ));
