@@ -1,15 +1,13 @@
-const electron = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
 const authenticateVK = require('electron-vk-oauth2');
-// Module to control application life.
-const app = electron.app;
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
 
 const APP_ID = '6306577';
 const SCOPE = 'messages';
 
 const path = require('path');
 const url = require('url');
+const configUtils = require('./utils/config');
+const CONFIG_EVENTS = require('./constants/events');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -33,7 +31,7 @@ function createMainWindow () {
         protocol: 'file:',
         slashes: true
     }));*/
-    mainWindow.loadURL('http://localhost:3000'); // TODO add production support
+    // mainWindow.loadURL('http://localhost:3000');
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
@@ -62,16 +60,17 @@ function createAuthWindow(mainWindow) {
         };
         console.log(res);
         mainWindow.show();
-        mainWindow.loadURL('http://localhost:3000');
+        mainWindow.loadURL('http://localhost:3000'); // TODO add production support
     }).catch((err) => {
         console.error(err);
+        mainWindow.destroy();
     });
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createMainWindow);
+app.on('ready', init);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -92,3 +91,16 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+function init() {
+    configUtils.readConfig().then((config) => {
+        initEvents(config);
+        createMainWindow();
+    });
+}
+
+function initEvents(config) {
+    ipcMain.on(CONFIG_EVENTS.GET, (event) => {
+        event.sender.send(CONFIG_EVENTS.UPDATE, config);
+    });
+}
