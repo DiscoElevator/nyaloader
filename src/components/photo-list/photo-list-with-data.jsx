@@ -1,6 +1,6 @@
 import React from 'react';
 import {fetchPhotos} from 'api';
-import {PhotoList} from './photo-list';
+import {PhotoListWithFilter} from './photo-list-with-filter';
 
 export class PhotoListWithData extends React.Component {
     state = {
@@ -34,7 +34,10 @@ export class PhotoListWithData extends React.Component {
 
     render() {
         return (
-            <PhotoList photos={this.state.photos} />
+            <PhotoListWithFilter
+                photos={this.state.photos}
+                {...this.props}
+            />
         )
     }
 }

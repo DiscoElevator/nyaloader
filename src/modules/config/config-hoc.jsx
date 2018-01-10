@@ -3,7 +3,7 @@ import EVENTS from 'constants/events';
 
 const {ipcRenderer} = window.require('electron');
 
-export const createConfigHOC = (WrappedComponent) => {
+export const withConfig = (WrappedComponent) => {
     return class ConfigHOC extends React.Component {
         state = {
             config: null

@@ -1,9 +1,9 @@
 import React from 'react';
 import {Header} from 'components/header';
 import {PhotoList} from 'components/photo-list';
-import {createConfigHOC} from 'modules/config';
+import {withConfig} from 'modules/config';
 
-export const App = createConfigHOC((props) => (
+export const App = withConfig((props) => (
     <div>
         <Header {...props} />
         <PhotoList {...props} />

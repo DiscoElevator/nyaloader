@@ -5,4 +5,8 @@
     cursor: pointer;
     overflow: hidden;
     padding: 5px;
+
+    &--selected {
+        border: 1px solid #34b0ff;
+    }
 }

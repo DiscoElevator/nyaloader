@@ -1,1 +1,1 @@
-export {createConfigHOC} from './config-hoc';
+export {withConfig} from './config-hoc';
