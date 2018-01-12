@@ -1,5 +1,5 @@
 import React from 'react';
-import EVENTS from 'constants/events';
+import {CONFIG_UPDATE, CONFIG_GET} from 'constants/events';
 
 const {ipcRenderer} = window.require('electron');
 
@@ -10,8 +10,8 @@ export const withConfig = (WrappedComponent) => {
         };
 
         componentDidMount() {
-            ipcRenderer.on(EVENTS.CONFIG_UPDATE, this.configUpdateHandler);
-            ipcRenderer.send(EVENTS.CONFIG_GET);
+            ipcRenderer.on(CONFIG_UPDATE, this.configUpdateHandler);
+            ipcRenderer.send(CONFIG_GET);
         }
 
         componentWillUnmount() {

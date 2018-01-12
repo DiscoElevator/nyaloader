@@ -1,9 +1,12 @@
 import React from 'react';
 import {PhotoList} from './photo-list';
 import {SHOW_ALL, SHOW_SELECTED} from 'constants/filters';
-import {Filter} from './filter';
+import {Toolbar} from 'components/toolbar';
+import {DOWNLOAD_START} from 'constants/events';
 
-export class PhotoListWithFilter extends React.Component {
+const {ipcRenderer} = window.require('electron');
+
+export class PhotoListWithToolbar extends React.Component {
     state = {
         filter: SHOW_ALL
     };
@@ -16,12 +19,18 @@ export class PhotoListWithFilter extends React.Component {
         return filter === SHOW_SELECTED ? selectedPhotos : photos;
     };
 
+    handleDownloadButtonClick = () => {
+        ipcRenderer.send(DOWNLOAD_START, this.props.selectedPhotos);
+    };
+
     render() {
         return (
             <React.Fragment>
-                <Filter
+                <Toolbar
                     filter={this.state.filter}
                     onFilterChange={this.handleFilterChange}
+                    selectedCount={this.props.selectedPhotos.length}
+                    onDownloadButtonClick={this.handleDownloadButtonClick}
                 />
                 <PhotoList
                     {...this.props}

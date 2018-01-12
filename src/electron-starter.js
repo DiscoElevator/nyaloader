@@ -22,9 +22,9 @@ function createMainWindow() {
         height: 600,
         show: false,
         webPreferences: {
-            webSecurity: false
+            webSecurity: false // TODO enable security for prod
         }
-    }); // TODO enable security for prod
+    });
 
     // and load the index.html of the app.
     /*    mainWindow.loadURL(url.format({
@@ -98,7 +98,7 @@ function init() {
         initEvents(config);
         // downloadPhoto({
         //     id: 1,
-        //     photo_75: ''
+        //     photo_75: 'https://pp.userapi.com/c830609/v830609301/3e5a3/f69lNVScef8.jpg'
         // }, config.workDir).then(id => console.log(`DL: ${id}`)).catch(err => console.error(err));
         createMainWindow();
     });
@@ -109,9 +109,12 @@ function initEvents(config) {
         event.sender.send(EVENTS.CONFIG_UPDATE, config);
     });
     ipcMain.on(EVENTS.DOWNLOAD_START, (event, photos) => {
-        console.log('start', photos);
-        // downloadPhotos(photos, config).map(promise =>
-        //     promise.then(id => event.sender.send(EVENTS.DOWNLOAD_FILE_LOADED, id))
-        // );
+        event.sender.send(EVENTS.DOWNLOAD_STARTED);
+        Promise.all(downloadPhotos(photos, config).map(promise =>
+            promise.then(id => event.sender.send(EVENTS.DOWNLOAD_FILE_LOADED, id))
+        )).then(() => {
+            event.sender.send(EVENTS.DOWNLOAD_FINISHED);
+            console.log('loading finished');
+        });
     });
 }

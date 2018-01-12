@@ -1,12 +1,15 @@
 import React from 'react';
 import {plainBlock} from '@redneckz/react-bem-helper';
 import {SHOW_ALL, SHOW_SELECTED} from 'constants/filters';
-import styles from './filter.scss';
 
-@plainBlock('filter', {styles})
-export class Filter extends React.Component {
+
+import styles from './toolbar.scss';
+
+@plainBlock('toolbar', {styles})
+export class Toolbar extends React.Component {
     static defaultProps = {
-        filter: SHOW_ALL
+        filter: SHOW_ALL,
+        selectedCount: 0
     };
 
     handleChange = e => this.props.onFilterChange(e.target.value);
@@ -30,8 +33,9 @@ export class Filter extends React.Component {
                     checked={this.props.filter === SHOW_SELECTED}
                     onChange={this.handleChange}
                 />
-                    Show selected
+                    Show selected ({this.props.selectedCount})
                 </label>
+                <button onClick={this.props.onDownloadButtonClick}>Download</button>
             </div>
         );
     }

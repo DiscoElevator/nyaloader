@@ -6,8 +6,10 @@ const CONFIG_EVENTS = {
 
 const DOWNLOAD_EVENTS = {
     DOWNLOAD_START: 'download:start',
+    DOWNLOAD_STARTED: 'download:started',
     DOWNLOAD_ERROR: 'download:error',
-    DOWNLOAD_FILE_LOADED: 'download:fileLoaded'
+    DOWNLOAD_FILE_LOADED: 'download:fileLoaded',
+    DOWNLOAD_FINISHED: 'download:finished'
 };
 
 module.exports = Object.assign({}, CONFIG_EVENTS, DOWNLOAD_EVENTS);
