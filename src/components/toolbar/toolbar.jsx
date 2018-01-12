@@ -1,5 +1,6 @@
 import React from 'react';
 import {plainBlock} from '@redneckz/react-bem-helper';
+import {Progressbar} from 'components/progressbar';
 import {SHOW_ALL, SHOW_SELECTED} from 'constants/filters';
 
 
@@ -22,6 +23,7 @@ export class Toolbar extends React.Component {
                     type="radio"
                     value={SHOW_ALL}
                     checked={this.props.filter === SHOW_ALL}
+                    disabled={this.props.loading}
                     onChange={this.handleChange}
                 />
                     Show all
@@ -31,11 +33,21 @@ export class Toolbar extends React.Component {
                     type="radio"
                     value={SHOW_SELECTED}
                     checked={this.props.filter === SHOW_SELECTED}
+                    disabled={this.props.loading}
                     onChange={this.handleChange}
                 />
                     Show selected ({this.props.selectedCount})
                 </label>
-                <button onClick={this.props.onDownloadButtonClick}>Download</button>
+                <button
+                    onClick={this.props.onDownloadButtonClick}
+                    disabled={this.props.loading || this.props.downloadButtonDisabled}
+                >
+                    Download
+                </button>
+                {this.props.loading && <Progressbar
+                    max={this.props.selectedCount}
+                    progress={this.props.progress}
+                />}
             </div>
         );
     }

@@ -8,7 +8,7 @@ const DOWNLOAD_EVENTS = {
     DOWNLOAD_START: 'download:start',
     DOWNLOAD_STARTED: 'download:started',
     DOWNLOAD_ERROR: 'download:error',
-    DOWNLOAD_FILE_LOADED: 'download:fileLoaded',
+    DOWNLOAD_PROGRESS_UPDATE: 'download:progressUpdate',
     DOWNLOAD_FINISHED: 'download:finished'
 };
 

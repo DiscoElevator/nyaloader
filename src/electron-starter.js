@@ -8,7 +8,7 @@ const path = require('path');
 const url = require('url');
 const configUtils = require('./utils/config');
 const EVENTS = require('./constants/events');
-const {downloadPhotos} = require('./utils/photo-loader');
+const {photoDownloadHandler} = require('./utils/photo-loader');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -96,10 +96,6 @@ app.on('activate', function () {
 function init() {
     configUtils.readConfig().then((config) => {
         initEvents(config);
-        // downloadPhoto({
-        //     id: 1,
-        //     photo_75: 'https://pp.userapi.com/c830609/v830609301/3e5a3/f69lNVScef8.jpg'
-        // }, config.workDir).then(id => console.log(`DL: ${id}`)).catch(err => console.error(err));
         createMainWindow();
     });
 }
@@ -108,13 +104,5 @@ function initEvents(config) {
     ipcMain.on(EVENTS.CONFIG_GET, (event) => {
         event.sender.send(EVENTS.CONFIG_UPDATE, config);
     });
-    ipcMain.on(EVENTS.DOWNLOAD_START, (event, photos) => {
-        event.sender.send(EVENTS.DOWNLOAD_STARTED);
-        Promise.all(downloadPhotos(photos, config).map(promise =>
-            promise.then(id => event.sender.send(EVENTS.DOWNLOAD_FILE_LOADED, id))
-        )).then(() => {
-            event.sender.send(EVENTS.DOWNLOAD_FINISHED);
-            console.log('loading finished');
-        });
-    });
+    ipcMain.on(EVENTS.DOWNLOAD_START, photoDownloadHandler(config));
 }

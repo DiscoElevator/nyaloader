@@ -1,6 +1,7 @@
 const https = require('https');
 const fs = require('fs');
 const promisify = require('util.promisify'); // TODO replace with native after Electon 1.8 release
+const EVENTS = require('../constants/events');
 
 const writeFile = promisify(fs.writeFile);
 
@@ -46,6 +47,24 @@ const downloadPhotos = (photos, {workDir}) => {
     return photos.map(photo => downloadPhoto(photo, workDir));
 };
 
+const photoDownloadHandler = (config) => {
+    return (event, photos) => {
+        let progress = 0;
+        console.log(`Started loading of ${photos.length} photos`);
+        event.sender.send(EVENTS.DOWNLOAD_STARTED);
+        Promise.all(downloadPhotos(photos, config).map(promise =>
+            promise.then(id => {
+                progress++;
+                event.sender.send(EVENTS.DOWNLOAD_PROGRESS_UPDATE, {id, progress});
+            })
+        )).then(() => {
+            event.sender.send(EVENTS.DOWNLOAD_FINISHED);
+            console.log('loading finished');
+        });
+    };
+};
+
 module.exports = {
-    downloadPhotos
+    downloadPhotos,
+    photoDownloadHandler
 };
