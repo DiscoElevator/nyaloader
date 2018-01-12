@@ -5,7 +5,7 @@ import styles from './filter.scss';
 
 @plainBlock('filter', {styles})
 export class Filter extends React.Component {
-    defaultProps = {
+    static defaultProps = {
         filter: SHOW_ALL
     };
 

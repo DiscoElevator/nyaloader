@@ -4,4 +4,10 @@ const CONFIG_EVENTS = {
     CONFIG_SAVE: 'config:save'
 };
 
-module.exports = Object.assign({}, CONFIG_EVENTS);
+const DOWNLOAD_EVENTS = {
+    DOWNLOAD_START: 'download:start',
+    DOWNLOAD_ERROR: 'download:error',
+    DOWNLOAD_FILE_LOADED: 'download:fileLoaded'
+};
+
+module.exports = Object.assign({}, CONFIG_EVENTS, DOWNLOAD_EVENTS);

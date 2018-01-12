@@ -8,13 +8,14 @@ const path = require('path');
 const url = require('url');
 const configUtils = require('./utils/config');
 const EVENTS = require('./constants/events');
+const {downloadPhotos} = require('./utils/photo-loader');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 global.sharedObject = {};
 
-function createMainWindow () {
+function createMainWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 800,
@@ -26,11 +27,11 @@ function createMainWindow () {
     }); // TODO enable security for prod
 
     // and load the index.html of the app.
-/*    mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'index.html'),
-        protocol: 'file:',
-        slashes: true
-    }));*/
+    /*    mainWindow.loadURL(url.format({
+            pathname: path.join(__dirname, 'index.html'),
+            protocol: 'file:',
+            slashes: true
+        }));*/
     // mainWindow.loadURL('http://localhost:3000');
 
     // Open the DevTools.
@@ -95,6 +96,10 @@ app.on('activate', function () {
 function init() {
     configUtils.readConfig().then((config) => {
         initEvents(config);
+        // downloadPhoto({
+        //     id: 1,
+        //     photo_75: ''
+        // }, config.workDir).then(id => console.log(`DL: ${id}`)).catch(err => console.error(err));
         createMainWindow();
     });
 }
@@ -102,5 +107,11 @@ function init() {
 function initEvents(config) {
     ipcMain.on(EVENTS.CONFIG_GET, (event) => {
         event.sender.send(EVENTS.CONFIG_UPDATE, config);
+    });
+    ipcMain.on(EVENTS.DOWNLOAD_START, (event, photos) => {
+        console.log('start', photos);
+        // downloadPhotos(photos, config).map(promise =>
+        //     promise.then(id => event.sender.send(EVENTS.DOWNLOAD_FILE_LOADED, id))
+        // );
     });
 }
