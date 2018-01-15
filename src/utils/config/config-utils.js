@@ -29,7 +29,7 @@ const readConfig = async () => {
 
 const writeConfig = async (config) => {
     const configToWrite = mergeWithDefault(config);
-    return await writeFile(CONFIG_FILE, JSON.stringify(configToWrite));
+    return writeFile(CONFIG_FILE, JSON.stringify(configToWrite));
 };
 
 module.exports = {

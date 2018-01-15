@@ -65,6 +65,5 @@ const photoDownloadHandler = (config) => {
 };
 
 module.exports = {
-    downloadPhotos,
     photoDownloadHandler
 };
