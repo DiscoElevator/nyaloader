@@ -26,17 +26,6 @@ function createMainWindow() {
         }
     });
 
-    // and load the index.html of the app.
-    /*    mainWindow.loadURL(url.format({
-            pathname: path.join(__dirname, 'index.html'),
-            protocol: 'file:',
-            slashes: true
-        }));*/
-    // mainWindow.loadURL('http://localhost:3000');
-
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
-
     createAuthWindow(mainWindow);
 
     // Emitted when the window is closed.
@@ -61,10 +50,18 @@ function createAuthWindow(mainWindow) {
         };
         console.log(res);
         mainWindow.show();
-        mainWindow.loadURL('http://localhost:3000'); // TODO add production support
+        mainWindow.loadURL(getURL());
     }).catch((err) => {
         console.error(err);
         mainWindow.destroy();
+    });
+}
+
+function getURL() {
+    return process.env.ELECTRON_START_URL || url.format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file:',
+        slashes: true
     });
 }
 
