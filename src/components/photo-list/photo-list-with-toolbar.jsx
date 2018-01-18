@@ -1,7 +1,7 @@
 import React from 'react';
-import {PhotoList} from './photo-list';
-import {SHOW_ALL, SHOW_SELECTED} from 'constants/filters';
+import {SHOW_ALL} from 'constants/filters';
 import {Toolbar} from 'components/toolbar';
+import {PhotoListWithPagination} from './photo-list-with-pagination';
 import {
     DOWNLOAD_START,
     DOWNLOAD_PROGRESS_UPDATE,
@@ -14,26 +14,34 @@ export class PhotoListWithToolbar extends React.Component {
     state = {
         filter: SHOW_ALL,
         loading: false,
-        progress: 0
+        progress: 0,
+        selectedPhotos: []
     };
 
     handleFilterChange = filter => this.setState({filter});
 
-    filterPhotos = () => {
-        const {photos, selectedPhotos} = this.props;
-        const {filter} = this.state;
-        return filter === SHOW_SELECTED ? selectedPhotos : photos;
-    };
-
     handleDownloadButtonClick = () => {
         ipcRenderer.on(DOWNLOAD_PROGRESS_UPDATE, this.updateProgress);
-        ipcRenderer.send(DOWNLOAD_START, this.props.selectedPhotos);
+        ipcRenderer.send(DOWNLOAD_START, this.state.selectedPhotos);
         this.setState({loading: true, progress: 0});
         ipcRenderer.once(DOWNLOAD_FINISHED, () => {
             ipcRenderer.removeListener(DOWNLOAD_PROGRESS_UPDATE, this.updateProgress);
-            this.setState({loading: false});
+            this.setState({loading: false, progress: 0});
         });
     };
+
+    togglePhotoSelection = (photo) => this.setState(({selectedPhotos}) => {
+        const result = [...selectedPhotos];
+        const index = selectedPhotos.findIndex(item => item.id === photo.id);
+        if (index > -1) {
+            result.splice(index, 1);
+        } else {
+            result.push(photo);
+        }
+        return {
+            selectedPhotos: result
+        }
+    });
 
     updateProgress = (event, {progress}) => this.setState({progress});
 
@@ -43,15 +51,17 @@ export class PhotoListWithToolbar extends React.Component {
                 <Toolbar
                     filter={this.state.filter}
                     onFilterChange={this.handleFilterChange}
-                    selectedCount={this.props.selectedPhotos.length}
+                    selectedCount={this.state.selectedPhotos.length}
                     onDownloadButtonClick={this.handleDownloadButtonClick}
                     loading={this.state.loading}
                     progress={this.state.progress}
-                    downloadButtonDisabled={this.props.selectedPhotos.length === 0}
+                    downloadButtonDisabled={this.state.selectedPhotos.length === 0}
                 />
-                <PhotoList
+                <PhotoListWithPagination
                     {...this.props}
-                    photos={this.filterPhotos()}
+                    filter={this.state.filter}
+                    selectedPhotos={this.state.selectedPhotos}
+                    onPhotoClick={this.togglePhotoSelection}
                 />
             </React.Fragment>
         );

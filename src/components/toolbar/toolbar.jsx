@@ -19,23 +19,23 @@ export class Toolbar extends React.Component {
         return (
             <div className={this.props.className}>
                 <label>
-                <input
-                    type="radio"
-                    value={SHOW_ALL}
-                    checked={this.props.filter === SHOW_ALL}
-                    disabled={this.props.loading}
-                    onChange={this.handleChange}
-                />
+                    <input
+                        type="radio"
+                        value={SHOW_ALL}
+                        checked={this.props.filter === SHOW_ALL}
+                        disabled={this.props.loading}
+                        onChange={this.handleChange}
+                    />
                     Show all
                 </label>
                 <label>
-                <input
-                    type="radio"
-                    value={SHOW_SELECTED}
-                    checked={this.props.filter === SHOW_SELECTED}
-                    disabled={this.props.loading}
-                    onChange={this.handleChange}
-                />
+                    <input
+                        type="radio"
+                        value={SHOW_SELECTED}
+                        checked={this.props.filter === SHOW_SELECTED}
+                        disabled={this.props.loading}
+                        onChange={this.handleChange}
+                    />
                     Show selected ({this.props.selectedCount})
                 </label>
                 <button
