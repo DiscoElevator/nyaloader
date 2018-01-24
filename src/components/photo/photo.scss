@@ -1,12 +1,13 @@
 .photo {
-/*    height: 150px;
-    width: 100px;*/
-    //border: 1px solid black;
     cursor: pointer;
     overflow: hidden;
     padding: 5px;
 
     &--selected {
         border: 1px solid #34b0ff;
+    }
+
+    &__image {
+        width: 100%;
     }
 }
