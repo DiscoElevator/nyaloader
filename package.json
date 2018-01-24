@@ -20,6 +20,6 @@
     "electron": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
   },
   "devDependencies": {
-    "electron": "^1.7.10"
+    "electron": "^1.7.11"
   }
 }
