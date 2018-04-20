@@ -34,6 +34,10 @@ export class PhotoListWithInfiniteScroll extends PureComponent {
         this.observer.unobserve(this.bottomElement);
     };
 
+    bottomElementRef = (el) => this.bottomElement = el;
+
+    rootElementRef = (el) => this.rootElement = el;
+
     handleListEndIntersection = (entries) => {
         const ratio = entries[0].intersectionRatio;
         if ((ratio !== 1) || this.state.loading) {
@@ -66,7 +70,7 @@ export class PhotoListWithInfiniteScroll extends PureComponent {
         return (
             <div
                 className={this.props.className}
-                ref={(el) => {this.rootElement = el;}}
+                ref={this.rootElementRef}
             >
                 <PhotoListWithFilter
                     {...this.props}
@@ -74,7 +78,7 @@ export class PhotoListWithInfiniteScroll extends PureComponent {
                 />
                 {this.state.loading && <LoadingMessage />}
                 <div
-                    ref={(el) => {this.bottomElement = el;}}
+                    ref={this.bottomElementRef}
                     style={{height: '10px'}}
                 />
             </div>
