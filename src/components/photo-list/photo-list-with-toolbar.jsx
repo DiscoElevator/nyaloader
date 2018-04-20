@@ -1,7 +1,7 @@
 import React from 'react';
 import {SHOW_ALL} from 'constants/filters';
 import {Toolbar} from 'components/toolbar';
-import {PhotoListWithPagination} from './photo-list-with-pagination';
+import {PhotoListWithInfiniteScroll} from './photo-list-with-infinite-scroll';
 import {
     DOWNLOAD_START,
     DOWNLOAD_PROGRESS_UPDATE,
@@ -57,8 +57,9 @@ export class PhotoListWithToolbar extends React.Component {
                     progress={this.state.progress}
                     downloadButtonDisabled={this.state.selectedPhotos.length === 0}
                 />
-                <PhotoListWithPagination
+                <PhotoListWithInfiniteScroll
                     {...this.props}
+                    loadingEnabled={this.state.filter === SHOW_ALL}
                     filter={this.state.filter}
                     selectedPhotos={this.state.selectedPhotos}
                     onPhotoClick={this.togglePhotoSelection}
