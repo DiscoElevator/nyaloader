@@ -1,5 +1,5 @@
 const fs = require('fs');
-const promisify = require('util.promisify'); // TODO replace with native after Electon 1.8 release
+const {promisify} = require('util');
 const DEFAULT_CONFIG = require('../../constants/default-config');
 
 const CONFIG_FILE = 'config.json';

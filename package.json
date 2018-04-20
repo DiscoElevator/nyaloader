@@ -8,8 +8,7 @@
     "electron-vk-oauth2": "1.0.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "custom-react-scripts": "^0.2.1",
-    "util.promisify": "^1.0.0"
+    "custom-react-scripts": "^0.2.1"
   },
   "main": "src/electron-starter.js",
   "scripts": {
@@ -20,6 +19,6 @@
     "electron": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
   },
   "devDependencies": {
-    "electron": "^1.7.11"
+    "electron": "^1.8.1"
   }
 }
