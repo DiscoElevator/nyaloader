@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
-    "@redneckz/react-bem-helper": "1.0.4",
+    "@redneckz/react-bem-helper": "~1.1.1",
     "electron-vk-oauth2": "1.0.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
